@@ -1,0 +1,58 @@
+Database |
+---------
+
+1) Users: 
+            - id
+            - First Name
+            - Last Name
+            - Username
+            - Email
+            - Password 
+            - Registered On 
+            - Document id: []
+
+2) Documents:
+            - id
+            - Title
+            - Access 
+            - Published On
+
+
+Server Side |
+------------
+
+1) Initialise the connection to the backend database 
+
+2) CRUD functionality - Users:
+                                - Create 
+                                - Read 
+                                - Update 
+                                - Delete 
+
+                        - Documents: 
+                                - Create
+                                - Read
+                                - Update 
+                                - Delete 
+
+Client |
+-------
+
+url: '/'
+Main Components: 
+                - Navbar - Remain the same 
+                - Title - Change: All Documents 
+                - Table - All documents - Remain the same 
+
+url: '/'
+
+Components:
+            - Navbar:
+                     - All Documents 
+                     - My Documents 
+                     - Create A Document 
+                     - All Users 
+                     - Edit Profile 
+
+
+

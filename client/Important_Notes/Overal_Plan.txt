@@ -1,0 +1,46 @@
+Overall Plan |
+--------------
+
+1) Sort the database out - and any external or other application, the application i am building will interact with 
+
+2) Sort file structure out, including the dependencies 
+
+    - If gets stuck - write things on paper 
+    - Draw things - Wireframe 
+    - Dicuss with others
+    - Add to the file structure, or edit if have to.... 
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

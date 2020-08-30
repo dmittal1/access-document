@@ -1,0 +1,81 @@
+URL: https://www.youtube.com/watch?v=SWYqp7iY_Tc
+
+!!! Git Commands !!!
+
+--------------------------------------------------------
+Command: git init
+Description: Initialised empty git repository
+--------------------------------------------------------
+Command: git config --global user.name 'your name'
+Description: Add name as global variable in Git
+--------------------------------------------------------
+Command: git config --global user.email 'your email'
+Description: Add your email as global variable in Git
+--------------------------------------------------------
+Command: git add 'nameoffile'
+Description: Files are added to the staging area
+--------------------------------------------------------------------------------------
+Command: git status
+Description: Which files are in the staging area and the files that have been modified
+--------------------------------------------------------------------------------------
+Command: git rm --cached 'nameoffile'
+Description: Remove file from the staging area
+---------------------------------------------------------------------------
+Command: git add *.'nameoffileextension' --  i.e. git add *.html
+Description: Add files, with the desired file extension to the staging area
+----------------------------------------------------------------------------
+Command: git add .
+Description: Add all files in directory to the staging area
+----------------------------------------------------------------------------
+Command: git commit
+Command: i
+Command: :wq
+Description: type the message before, type :wq, then the files are commited to the local repository
+----------------------------------------------------------------------------------------------------------------------------
+Command: git commit -m "Message here"
+Description: Add message before commiting files to the local repository, the files are then commited to the local repository
+-----------------------------------------------------------------------------------------------------------------------------
+File: .gitignore
+Description: Add any files path, the files wont be uploaded to github..., can use *.'name of file extension'
+-----------------------------------------------------------------------------------------------------------------------------
+
+!!!BRANCHES!!!
+
+---------------------------------------------------------
+Command: git branch 'nameofbranch'
+Description: create a branch of the master branch on git
+---------------------------------------------------------
+Command: git checkout 'nameofbranch'
+Description: Switch to the branch 
+---------------------------------------------------------
+Command: git merge -m "State reason for merging"
+Description: Merges the branches to the master branch 
+--------------------------------------------------------------------------------------------------------------
+Command: git branch -a
+Description: Displays with * what branch your in, all all the remote and local branches that have available
+--------------------------------------------------------------------------------------------------------------
+
+!!!Remote Respository!!!
+
+----------------------------------------------------------
+Command: git remote 
+Description: display the urls of remote repository
+------------------------------------------------------------------------------------------------------
+Command: git remote add origin 'url of remote repository'
+Description: add the remote repository to the local repository, so can commit to the remote repository
+-------------------------------------------------------------------------------------------------------
+Command: git push -u origin master
+then 
+Command: git push 
+Description: pushes the files in the local repository in the branch master to the remote repository
+-------------------------------------------------------------------------------------------------------
+Command: git pull
+Description: files in the remote repository are 'pulled' to the local repository
+-------------------------------------------------------------------------------------------------------
+
+!!!Clone Respository!!!
+
+------------------------------------------------------------------------------------------
+Command: git clone 'name of url'
+Description: Get the files in the remote repository and add the files to the local machine 
+------------------------------------------------------------------------------------------
