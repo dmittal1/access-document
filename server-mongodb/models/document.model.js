@@ -18,7 +18,11 @@ const DocumentSchema = new Schema({
     published_on:{
         type: Date,
         default: Date.now
+    },
+    user_id:{
+        type: String,
+        required: true
     }
 })
 
-export default Document = mongoose.model('document', DocumentSchema);
+export default mongoose.model('document', DocumentSchema);

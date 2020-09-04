@@ -1,21 +1,15 @@
-import config from 'config';
 import jwt from 'jsonwebtoken';
 
-function auth(req, res, next){
-    const token = req.header('x-auth-token');
+function Auth(req, res, next){
+    const token = req.header('auth-token');
 
-    // Check for token 
-    if(!token) return res.status(401).json({ msg: 'No token, authorization denied' });
-
-    try {
-    // Verify token
-    const decoded = jwt.verify(token, config.get('jwtSecret'));
-    // Add user from payload
-    req.user = decoded;
-    next();
-    } catch(e){
-        res.status(400).json({ msg: 'Token is not valid' })
+    try{
+        const verified = jwt.verify(token, 'eqr3r3rd2');
+        req.user = verified;
+        next();
+    } catch(err){
+        res.status(400).send('Invalid Token');
     }
-}
+};
 
-export default auth;
+export default Auth;
