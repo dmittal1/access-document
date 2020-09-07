@@ -25,7 +25,7 @@ app.use('/api/documents', documentRoute);
 app.use('/api/authentication', userAuthRoute);
 app.use('/api/users', userRoute);
 
-const port = 3000 || 5000;
+const port = 3001 || 5000;
 
 app.listen(port, () => console.log(`Server started on ${port}`));
 
