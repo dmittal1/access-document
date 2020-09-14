@@ -73,10 +73,9 @@ router.delete('/:id', auth, (req, res) => {
     Document.findOne({ _id: req.params.id }, function(error, document){
         if(document.user_id == jwt_decode(req.header('auth-token'), 'eqr3r3rd2')._id){
             document.remove();
-            return 1;
-        } else {
-            return 0
+            return true;
         }
+            return false;
     }) 
       .then(() => res.json("Document Deleted"))
       .catch(() => res.status(400).json("Can not delete document"))

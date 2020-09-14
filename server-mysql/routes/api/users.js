@@ -1,8 +1,6 @@
 import express from 'express';
 import auth from '../../middleware/auth';
-
-// User Model
-import User from '../../models/user.model';
+import * as command from '../../config_mysql/SQL';
 
 const router = express.Router();
 
@@ -11,10 +9,15 @@ const router = express.Router();
 // @desc Register new user
 // @access Public 
 
-router.get('/', auth, (req, res) => {
-    User.find()
-        .sort({ register_date: -1 })
-        .then(items => res.json(items))
+router.get('/', auth, async (req, res) => {
+    
+    try{
+        const result = command.getAllUsers();
+        return res.send(result);
+    }
+    catch(err){
+        return res.status(400).send(err.message);
+    }
 });
 
 export default router;
