@@ -56,7 +56,7 @@ export async function createUsers(){
 export async function getAllUsers() {
     return new Promise(function(resolve, reject){
         con.query(`SELECT * FROM users WHERE 1`, function(err, result){
-            if(err) { return reject(err) };
+            if(err) { return reject(err.message) };
             if(result.length == 0) { return reject("No Users Available") };
             return resolve(result);
     })
@@ -67,7 +67,7 @@ export async function getAllUsers() {
 export async function getUserByEmail(email){
     return new Promise(function(resolve, reject){
         con.query(`SELECT * FROM users WHERE email = ${con.escape(email)}`, function(err, result){
-            if(err) { return reject(err) };
+            if(err) { return reject(err.message) };
             if(result.length == 0) { return reject("User does not exist with that email") };
             return resolve(result);
         });
@@ -77,7 +77,7 @@ export async function getUserByEmail(email){
 export async function checkUserExist(email){
     return new Promise(function(resolve, reject){
         con.query(`SELECT * FROM users WHERE email = ${con.escape(email)}`, function(err, result){
-            if(err) { return reject(err) };
+            if(err) { return reject(err.message) };
             if(result.length == 0) { return reject("User does not exist with that email") };
             return resolve(result);
         });
@@ -87,7 +87,7 @@ export async function checkUserExist(email){
 export async function checkUserDoesNotExist(email){
     return new Promise(function(resolve, reject){
         con.query(`SELECT * FROM users WHERE email = ${con.escape(email)}`, function(err, result){
-            if(err) { return reject(err) };
+            if(err) { return reject(err.message) };
             if(result.length !== 0) { return reject("User already exist with that email") };
             return resolve(result);
     })
@@ -100,7 +100,7 @@ export async function checkUserDoesNotExist(email){
 export async function insertUser(data){
     return new Promise(function(resolve, reject){
         con.query("INSERT INTO users (id, name, email, password) VALUES ?", data, function(err, result){
-            if(err) { return reject(err) };
+            if(err) { return reject(err.message) };
             if(result.affectedRows == 0) { return reject("User couldn't be saved") };
             return resolve("User has been saved successfully");
         });
@@ -110,7 +110,7 @@ export async function insertUser(data){
 export async function insertDocument(data){
     return new Promise(function(resolve, reject){
         con.query("INSERT INTO documents (id, title, access, content, user_id) VALUES ?", data, function(err, result){
-            if(err) { return reject(err) };
+            if(err) { return reject(err.message) };
             if(result.affectedRows == 0) { return reject("Document couldn't be saved") };
             return resolve("Document have been saved successfully")
         });
@@ -120,7 +120,7 @@ export async function insertDocument(data){
 export async function updateDocument(data){
     return new Promise(function(resolve, reject){
         con.query(`UPDATE documents SET title = ${data.title}, access = ${data.access}, content = ${data.content}, user_id = ${data.user_id}WHERE id = ${data.id}`, function(err, result){
-            if(err) { return reject(err) };
+            if(err) { return reject(err.message) };
             if(result.affectedRows !== 1) { return reject("Document can not be updated") };
             return resolve("Document has been Updated"); 
     });
@@ -130,7 +130,7 @@ export async function updateDocument(data){
 export async function functiondeleteDocument(id){
     return new Promise(function(resolve, reject) {
         con.query(`DELETE FROM documents WHERE id = ${id}`, function(err, result){
-            if(err) { return reject(err) };
+            if(err) { return reject(err.message) };
             if(result.affectedRows !== 1) { return reject("Document can not be deleted")};
             return resolve("Document Deleted"); 
         });
@@ -140,7 +140,7 @@ export async function functiondeleteDocument(id){
 export async function getMyDocuments(id){
     return new Promise(function(resolve, reject){
         con.query(`SELECT * FROM documents where user_id = ${id} ORDER BY published_on DESC`, function(err, result){
-            if(err) { return reject(err) };
+            if(err) { return reject(err.message) };
             return resolve(result);
         })
     })
@@ -149,8 +149,8 @@ export async function getMyDocuments(id){
 
 export async function getAllDocuments(){
     return new Promise(function(resolve, reject) {
-        con.query(`SELECT * FROM documents`, function(err, result, fields) {
-            if(err) { return reject(err); }
+        con.query(`SELECT * FROM documents ORDER BY published_on DESC`, function(err, result, fields) {
+            if(err) { return reject(err.message); }
             return resolve(result);
         })
         
@@ -160,7 +160,7 @@ export async function getAllDocuments(){
 export async function getDocumentById(id){
     return new Promise(function(resolve, reject){
      con.query(`SELECT * FROM documents where id = ${id}`, function(err, result){
-        if(err) { return reject(err) };
+        if(err) { return reject(err.message) };
         if(result.length == 0) { return reject("Document does not exist")};
         return resolve(result);
     })

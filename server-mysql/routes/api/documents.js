@@ -10,18 +10,14 @@ const router = express.Router();
 // @desc Get all Documents
 // @access Public
 
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
     
     try{
         const result = await command.getAllDocuments();
-
-       
         return res.json(result);
     }
     catch(err){
-        console.log(err)
-        return res.status(400).send(err.message);
-
+        return res.status(400).send(err);
     }
 })
 
