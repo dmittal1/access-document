@@ -15,22 +15,24 @@ const con = mysql.createConnection({
 //Table: Documents
 
 const documentsTable = `create table if not exists documents(
-        id  varchar(20) NOT NULL,
-        title varchar(20) DEFAULT NULL,
-        access varchar(10) DEFAULT NULL,
+        id  varchar(40) NOT NULL,
+        title varchar(40) DEFAULT NULL,
+        access varchar(40) DEFAULT NULL,
         content longtext DEFAULT NULL,
         published_on timestamp NOT NULL DEFAULT current_timestamp(),
-        user_id varchar(20) DEFAULT NULL
+        user_id varchar(40) DEFAULT NULL,
+        PRIMARY KEY(id)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;`;
 
 // Table: Users
 const usersTable = `create table if not exists users(
-  id varchar(20) NOT NULL,
-  name varchar(20) NOT NULL,
-  email varchar(20) NOT NULL,
-  password varchar(20) NOT NULL,
-  register_date timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;`
+  id varchar(40) NOT NULL,
+  name varchar(40) NOT NULL,
+  email varchar(40) NOT NULL,
+  password varchar(100) NOT NULL,
+  register_date timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;`;
 
 export function connect(){
     return con.connect(function(err){
@@ -117,9 +119,9 @@ export async function insertDocument(data){
     });
 }
 
-export async function updateDocument(data){
+export async function updateDocument(id, data){
     return new Promise(function(resolve, reject){
-        con.query(`UPDATE documents SET title = ${data.title}, access = ${data.access}, content = ${data.content}, user_id = ${data.user_id}WHERE id = ${data.id}`, function(err, result){
+        con.query(`UPDATE documents SET title = '${data.title}', access = '${data.access}', content = '${data.content}' WHERE id = '${id}'`, function(err, result){
             if(err) { return reject(err.message) };
             if(result.affectedRows !== 1) { return reject("Document can not be updated") };
             return resolve("Document has been Updated"); 
@@ -127,9 +129,9 @@ export async function updateDocument(data){
 })
 }
 
-export async function functiondeleteDocument(id){
+export async function deleteDocument(id){
     return new Promise(function(resolve, reject) {
-        con.query(`DELETE FROM documents WHERE id = ${id}`, function(err, result){
+        con.query(`DELETE FROM documents WHERE id = '${id}'`, function(err, result){
             if(err) { return reject(err.message) };
             if(result.affectedRows !== 1) { return reject("Document can not be deleted")};
             return resolve("Document Deleted"); 
@@ -139,7 +141,7 @@ export async function functiondeleteDocument(id){
 
 export async function getMyDocuments(id){
     return new Promise(function(resolve, reject){
-        con.query(`SELECT * FROM documents where user_id = ${id} ORDER BY published_on DESC`, function(err, result){
+        con.query(`SELECT * FROM documents where user_id = '${id}' ORDER BY published_on DESC`, function(err, result){
             if(err) { return reject(err.message) };
             return resolve(result);
         })
@@ -157,9 +159,19 @@ export async function getAllDocuments(){
     })
 }
 
+export async function searchDocuments(keyWord){
+    return new Promise(function(resolve, reject) {
+        con.query(`SELECT * FROM documents WHERE title LIKE '${keyWord}%' ORDER BY published_on DESC`, function(err, result, fields) {
+            if(err) { return reject(err.message); }
+            return resolve(result);
+        })
+        
+    })
+}
+
 export async function getDocumentById(id){
     return new Promise(function(resolve, reject){
-     con.query(`SELECT * FROM documents where id = ${id}`, function(err, result){
+     con.query(`SELECT * FROM documents WHERE id = '${id}'`, function(err, result){
         if(err) { return reject(err.message) };
         if(result.length == 0) { return reject("Document does not exist")};
         return resolve(result);

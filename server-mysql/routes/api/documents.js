@@ -10,10 +10,25 @@ const router = express.Router();
 // @desc Get all Documents
 // @access Public
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     
     try{
         const result = await command.getAllDocuments();
+        return res.json(result);
+    }
+    catch(err){
+        return res.status(400).send(err);
+    }
+})
+
+// @route GET  api/Documents
+// @desc Search Documents
+// @access Public
+
+router.get('/search/:keyWord', auth, async (req, res) => {
+    
+    try{
+        const result = await command.searchDocuments(req.params.keyWord);
         return res.json(result);
     }
     catch(err){
@@ -35,7 +50,7 @@ router.get('/myDocuments', auth, async (req, res) => {
             return res.send(result);
         }
         catch(err){
-            return res.status(400).send(err.message);
+            return res.status(400).send(err);
         }
     })
 
@@ -60,7 +75,7 @@ router.post('/add', auth, async (req, res) => {
         return res.send(result);
     }
     catch(err){
-        return res.status(400).send(err.message);
+        return res.status(400).send(err);
     }
 });
 
@@ -77,11 +92,11 @@ router.post('/update/:id', auth, async (req, res) => {
         // Check if user has access to this document
         if (document[0].user_id !== loggedonId) return res.status(400).send("Insufficient Privileges, check user id");
         // Save updated document
-        const result = await command.updateDocument(res.body);
+        const result = await command.updateDocument(req.params.id, req.body);
         return res.send(result);
     }
     catch(err){
-        return res.status(400).send(err.message);
+        return res.status(400).send(err);
     }
 });
 
@@ -97,11 +112,11 @@ router.delete('/:id', auth, async (req, res) => {
         // Check if user has access to this document
         if (document[0].user_id !== loggedonId) return res.status(400).send("Insufficient Privileges, check user id");
         // Delete Document
-        const result = command.deleteDocument(req.params.id);
+        const result = await command.deleteDocument(req.params.id);
         return res.send(result);
     }
     catch(err){
-        return res.status(400).send(err.message);
+        return res.status(400).send(err);
     }
 });
 

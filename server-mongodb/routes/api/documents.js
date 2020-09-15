@@ -18,6 +18,16 @@ router.get('/', auth, (req, res) => {
         .then(items => res.json(items))
 })
 
+// @route Search api/Documents
+// @desc Search for specific Documents
+// @access Public
+
+router.get('/search/:keyWord', auth, (req, res) => {
+    Document.find({ title: {'$regex': req.params.keyWord }})
+        .sort({ published_on: -1 })
+        .then(items => res.json(items))
+})
+
 // @route GET api/Documents
 // @desc Get All USERS Documents
 // @access Public 

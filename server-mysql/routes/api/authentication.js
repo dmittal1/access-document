@@ -23,10 +23,10 @@ router.post('/register', async (req, res) => {
         ]
         // Save User
         await command.insertUser([values]);
-        res.status("Inserted successfully into the database");
+        return res.send("User Registered");
     }
     catch(err){
-        return res.status(400).send(err.message);
+        return res.status(400).send(err);
     }
 
 });
@@ -45,12 +45,17 @@ router.post('/login', async (req, res) => {
     if(!validPass) return res.status(400).send('Invalid Password');
     //Assign token
     const token = jwt.sign({ _id: result[0].id }, 'eqr3r3rd2');
-    res.header('auth-token', token).send(token);
+    return res.header('auth-token', token).send(token);
 
     }
     catch(err){
         return res.status(400).send(err.message);
     }
+})
+
+//LOGOUT
+router.post('/logout', async (req, res) => {
+    return res.header('auth-token', '').send('Logged Out');
 })
 
 export default router;

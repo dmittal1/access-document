@@ -51,4 +51,9 @@ router.post('/login', async (req, res) => {
     res.header('auth-token', token).send(token);
 })
 
+//LOGOUT
+router.post('/logout', async (req, res) => {
+    return res.header('auth-token', '').send('Logged Out');
+})
+
 export default router;
